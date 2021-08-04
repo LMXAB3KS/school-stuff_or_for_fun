@@ -1,0 +1,19 @@
+#Q: WAPP to store your name, store your age, address in 3 variables and print them
+
+age = int(input("Enter Your age: ")) #replace int with float for more precise age value
+name = str(input("Enter Your name: "))
+address = str(input("Enter your address: "))
+print("Hello {} you are {} years old and your address is {}".format(name,age,address))
+
+#Q: store marks in 5 subjects and compute total marks and percentage and display them
+
+mark1 = int(input("Enter first marks: "))
+mark2 = int(input("Enter second marks: "))
+mark3 = int(input("Enter third marks: "))
+mark4 = int(input("Enter fourth marks: "))
+mark5 = int(input("Enter fifth marks: "))
+
+all = mark1+mark2+mark3+mark4+mark5
+print(all)
+
+#made in python3 with Microsoft Visual Studio
