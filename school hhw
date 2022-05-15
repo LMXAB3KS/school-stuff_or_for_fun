@@ -1,0 +1,579 @@
+import os
+import random
+import datetime
+from string import printable # i forgot why i had imported this but please do not remove it. It WILL break something.
+
+
+#this code has very poor security, you can access anyones information at any point of time, i do not personally recommend using this in an actual business unless you know how to tweak it.
+#also in the rs thing you may not see a correct value because 20 is also added to whatever theyre purchasing. 
+#also, you probably shouldnt use this for a real hotel as this has little to no security.
+# exit() is an inbuilt function in python. It's not user defined anywhere here.
+
+# Global List Declaration, to be used in the user defined functions later on. do not remove
+name = []
+phone_number = []
+add = []
+checkin = []
+checkout = []
+room = []
+price = []
+rc = []
+p = []
+roomno = []
+custid = []
+day = []
+
+# Global Variable Declaration
+
+i = 0
+
+# Home Function
+
+def clear_screen():
+	os.system('cls') #cls is for windows. for linux / osx use 'clear' instead.
+
+print("This program requires you to be in a maximised window. Please maximise the program's window before continuing for best experience. If you understand, please type y.")
+understand = input("Enter your answer(y/n): ")
+if understand == "n":
+	exit()
+else:
+	pass
+clear_screen()
+
+def Home():
+	
+	print("\t\t\t WELCOME TO HOTEL SUNCITY\n")
+	print("\t\t 1 Booking\n")
+	print("\t\t 2 Rooms Information\n")
+	print("\t\t 3 Menu Card\n")
+	print("\t\t 4 Payment\n")
+	print("\t\t 5 Check in history\n") 
+	print("\t\t 0 Exit\n")
+
+	ch=int(input(": "))
+	
+	if ch == 1:
+		print(" ") #we are printing gaps just for the purpose of readibility and cleanliness.
+		Booking()
+	
+	elif ch == 2:
+		print(" ")
+		Rooms_Info()
+	
+	elif ch == 3:
+		print(" ")
+		restaurant()
+	
+	elif ch == 4:
+		print(" ")
+		Payment()
+	
+	elif ch == 5:
+		print(" ")
+		Record()
+	
+	else:
+		exit()
+
+# Function used in booking								
+
+def date(c):											#1 heres whats happening in this function. there is an array called "c" and its having 3 values passed in it. one for the year, one for the month and one for the day
+	
+	if c[2] >= 2010 and c[2] <= 2022:					#2 here its checking if the user input year is less than equal to 2010 and less than or equal to 2022. Why did i choose 2010? because i like to think 
+		
+		if c[1] != 0 and c[1] <= 12:					#3 here its checking if c1 the var for the month isnt zero, because why would you wanna book for 0 months?
+			
+			if c[1] == 2 and c[0] != 0 and c[0] <= 31:	#4 here its checking if c is 2 and not equal to zero and less than equal to 31, its for the days in a month
+				
+				if c[2]%4 == 0 and c[0] <= 29:			#5 this is for spefoal cases with less than 31 months, for example: february.
+					
+					pass								#6 pass here is used for, if all the above cases match than pass.
+				
+				elif c[0]<29:							#7 this is here for: else if its more than 29 pass because then if it werent there, the explanation for the 4th comment;s line of code would be invalid
+					pass
+				
+				else:
+					print("Invalid date\n")
+					name.pop(i)							# most of the pop functions are here because when a user enters something invalid that goes through the else check
+					phone_number.pop(i)							# the data is still stored in the list, so we still need to remove it, hence the reason for the pop function usage.
+					add.pop(i)
+					checkin.pop(i)
+					checkout.pop(i)
+					Booking()
+			
+			
+			# if month is odd & less than equal
+			# to 7th month
+			elif c[1] <= 7 and c[1]%2 != 0 and c[0] <= 31:
+				pass
+			
+			# if month is even & less than equal to 7th
+			# month and not 2nd month
+			elif c[1] <= 7 and c[1]%2 == 0 and c[0] <= 30 and c[1] != 2:
+				pass
+			
+			# if month is even & greater than equal
+			# to 8th month
+			elif c[1] >= 8 and c[1]%2 == 0 and c[0] <= 31:
+				pass
+			
+			# if month is odd & greater than equal
+			# to 8th month
+			elif c[1]>=8 and c[1]%2!=0 and c[0]<=30:
+				pass
+			
+			else:
+				print("An invalid date has been entered.\n")
+				name.pop(i)
+				phone_number.pop(i)
+				add.pop(i)
+				checkin.pop(i)
+				checkout.pop(i)
+				Booking()
+				
+		else:
+			print("An invalid date has been entered.\n")
+			name.pop(i)
+			phone_number.pop(i)
+			add.pop(i)
+			checkin.pop(i)
+			checkout.pop(i)
+			Booking()
+			
+	else:
+		print("An invalid date has been entered.\n")
+		name.pop(i)
+		phone_number.pop(i)
+		add.pop(i)
+		checkin.pop(i)
+		checkout.pop(i)
+		Booking()
+
+
+# Booking function
+def Booking():
+	
+		# used global keyword to
+		# use global variable 'i'
+		global i
+		print("BOOKING ROOMS")
+		print(" ")
+		
+		while 1:
+			n = str(input("Name: "))
+			p1 = str(input("Phone Number: "))
+			a = str(input("Address: "))
+			
+			# checks if any field is not empty
+			if n!="" and p1!="" and a!="":
+				name.append(n)
+				add.append(a)
+				break
+				
+			else:
+				print("One or more of the fields entered are empty, please try again.")	#the reasonm im using a break statement is because i dont want the user to relaunch the program every single time if they have made an error.
+																						#so in order to avoid this, im using a break statement.
+		
+																						
+							# i could use some other variable for the check in and check out dates  but i thought it would be funny to use foo and bar because foo and bar is a very popular placeholder name
+		foo=str(input("Check-In(dd/mm/yyy): "))
+		checkin.append(foo)	#foo is the check in variable, and bar is the check out variable.
+		foo=foo.split('/')	# he identifier for spliiting is / 
+		fo=foo				# its storing value of bar in ba
+		fo[0]=int(fo[0])	# each array's index number is holding a value.
+		fo[1]=int(fo[1])	#converting to int cuz it was str above and you cant append int values  in a list so im converting it to int after its been appended
+		fo[2]=int(fo[2])
+		date(fo)
+		
+		bar=str(input("Check-Out(dd/mm/yyy): "))
+		checkout.append(bar) #foo is the check in variable, and bar is the check out variable.
+		bar=bar.split('/')	 # the identifier for spliiting is / 
+		ba=bar				 # its storing value of bar in ba
+		ba[0]=int(ba[0])	 # each array's index number is holding a value. 		
+		ba[1]=int(ba[1])
+		ba[2]=int(ba[2])
+		
+		# checks if check-out date falls after the check-in date
+		if ba[1]<fo[1] and ba[2]<fo[2]:
+			
+			print("\n Error: Check-Out date must fall after Check-In\n")
+			name.pop(i)
+			add.pop(i)
+			checkin.pop(i)
+			checkout.pop(i)
+			Booking()
+		elif ba[1]==fo[1] and ba[2]>=fo[2] and ba[0]<=fo[0]:
+			
+			print("\n Error: Check-Out date must fall after Check-In\n")
+			name.pop(i)
+			add.pop(i)
+			checkin.pop(i)
+			checkout.pop(i)
+			Booking()
+		else:
+			pass
+		
+		date(ba)
+		d1 = datetime.datetime(fo[2],fo[1],fo[0])
+		d2 = datetime.datetime(ba[2],ba[1],ba[0])
+		d = (d2-d1).days
+		day.append(d)
+		
+		print("----SELECT ROOM TYPE----")
+		print(" 1. Standard Non-AC")
+		print(" 2. Standard AC")
+		print(" 3. 3-Bed Non-AC")
+		print(" 4. 3-Bed AC")
+		print(("\t\tPress 0 for Room Prices"))
+		
+		ch=int(input(": "))
+		
+
+		#REMINDER FOR MYSELF: FIX THE BROKEN CONTINUE STATEMENT BELOW SO THAT USR INPUT ISNT LESS THAN 0 OR GREATHER THAN 4
+		# if-conditions to display alloted room
+		# type and it's price
+		while(ch<=0 and ch >=4):
+			continue
+			print(" 1. Standard Non-AC - Rs. 3500")
+			print(" 2. Standard AC - Rs. 4000")
+			print(" 3. 3-Bed Non-AC - Rs. 4500")
+			print(" 4. 3-Bed AC - Rs. 5000")
+			ch=int(input(": "))
+		if ch==1:
+			room.append('Standard Non-AC')
+			print("Room Type- Standard Non-AC")
+			price.append(3500)
+			print("Price- 3500")
+		elif ch==2:
+			room.append('Standard AC')
+			print("Room Type- Standard AC")
+			price.append(4000)
+			print("Price- 4000")
+		elif ch==3:
+			room.append('3-Bed Non-AC')
+			print("Room Type- 3-Bed Non-AC")
+			price.append(4500)
+			print("Price- 4500")
+		elif ch==4:
+			room.append('3-Bed AC')
+			print("Room Type- 3-Bed AC")
+			price.append(5000)
+			print("Price- 5000")
+		else:
+			print("Item number out of indexed range. Please enter a valid item number(range:1-4).")
+
+
+		# randomly generating room no. and customer
+		# id for customer
+		rn = random.randrange(40)+300 #for the room range
+		fod = random.randrange(40)+10 #for the customer id
+		
+		
+		# checks if alloted room no. & customer
+		# id already not alloted
+		while rn in roomno or fod in custid:
+			rn = random.randrange(60)+300
+			fod = random.randrange(60)+10
+			
+		rc.append(0)
+		p.append(0)
+			
+		if p1 not in phone_number:
+			phone_number.append(p1)
+		elif p1 in phone_number:
+			for n in range(0,i):
+				if p1== phone_number[n]:
+					if p[n]==1:
+						phone_number.append(p1)
+		elif p1 in phone_number:
+			for n in range(0,i):
+				if p1== phone_number[n]:
+					if p[n]==0:
+						print("\t The phone number already exists and payment has not yet been done.")
+						name.pop(i)
+						add.pop(i)
+						checkin.pop(i)
+						checkout.pop(i)
+						Booking()
+		print("")
+		print("\t\t\tTHE ROOM HAS BEEN BOOKED SUCCESSFULLY\n")
+		print("Room No. - ",rn)
+		print("Customer Id - ",fod)
+		roomno.append(rn)
+		custid.append(fod)
+		i=i+1
+		n=int(input("ENTER 0 TO GO BACK\n : "))
+		if n==0:
+			Home()
+		else:
+			exit()
+
+# ROOMS INFO
+def Rooms_Info():
+	print("		 ------ HOTEL ROOMS INFO ------")
+	print("")
+	print("STANDARD NON-AC")
+	print("_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________")
+	print("Room amenities include: a Double Bed, a TV, a Telephone, \n Cupboard, a Coffee Table, 2 sofas, a Balcony and an attached washroom with hot/cold water.\n")
+	print("STANDARD NON-AC")
+	
+	print("_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________")
+	print("Room amenities include: a Double Bed, a TV, a Telephone, \na Double-Door Cupboard, a Coffee Table, 2 sofas, a Balcony and \nan attached washroom with hot/cold water + Window/Split AC.\n")
+	print("3-Bed NON-AC")
+	
+	print("______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________")
+	print("Room amenities include: a Double Bed + a Single Bed, a TV, a Telephone, a Triple-Door Cupboard, a coffee table with 3 sofas, \na Balcony with a Coffee Table with 2 Chairs and an \n attached washroom with hot/cold water.\n")
+	print("3-Bed AC")
+	
+	print("_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________")
+	print("Room amenities include: a Double Bed + a Single Bed, TV, a Telephone, a Triple-Door Cupboard, 1 coffee table with 2 sofa, a Side table, Balcony with an Accent table with 2 Chair and an \nattached washroom with hot/cold water + Window/Split AC.\n")
+	
+	n=int(input("ENTER 0 TO GO BACK\n : "))
+	if n==0:
+		Home()
+	else:
+		exit()
+
+#lists that it will iterate through to check for the valid values. for restaurant()
+var1 = [5,6]							# 30
+var2 = [7,8]							# 50
+var3 = [11,13,14,15,16,17,39]			# 110
+var4 = [44,45,46,47]					# 60
+var5 = [34,35,36,37,38]					# 100
+var6 = [26,27,28]						# 150
+var7 = [18,19]							# 120
+var8 =[20,21,22,23,24,25]				#140
+var9 = [00]								#value to exit cuz zero is already being used and i think it will break if i use 0
+'''
+values for the above lists. hopefully correct and ive not missed anything
+
+100 - 34 35 36 37 38
+110 -  11 13 14 15 16 17 39
+60  - 44 45 46 47
+140 - 20 21 22 23 24 25
+120 - 19 20
+25 - 2 3 4 
+30 - 5 6
+150 - 26 27 28
+20 - 1 29 30 31 32 33
+'''
+
+# RESTAURANT FUNCTION
+def restaurant():
+	
+	ph=int(input("Customer Id: "))
+	global i
+	f=0
+	r=0
+	for n in range(0,i):																						 #looping through a range of 0 to i with a variable called n. 
+		if custid[n]==ph and p[n]==0:																			 #checks to see if whoever is checking in is registered and the amount is not equal to zero.
+			f=1																									 #if the phone number is valid it becomes 1. here its being used as a bool value
+			print("-------------------------------------------------------------------------")
+			print("\t\t\t\tHotel Suncity - Menu Card")
+			print("-------------------------------------------------------------------------")																
+			print("\n")
+			print(" __  __                     _____              _ ")
+			print("|  \/  |                   / ____|            | |")
+			print("| \  / | ___ _ __  _   _  | |     __ _ _ __ __| |")
+			print("| |\/| |/ _ \ '_ \| | | | | |    / _` | '__/ _` |")
+			print("| |  | |  __/ | | | |_| | | |___| (_| | | | (_| |")
+			print("|_|  |_|\___|_| |_|\__,_|  \_____\__,_|_|  \__,_|")
+			print("\n")                                                                           
+			print("-------------------------------------------------------------------------")
+			print(" [BEVARAGES AND SNACKS]				 26 Dal Fry................ 150.00")
+			print("----------------------------------	 27 Dal Makhani............ 150.00")
+			print(" 1 Regular Tea............. 20.00	 28 Dal Tadka.............. 150.00")
+			print(" 2 Masala Tea.............. 25.00")
+			print(" 3 coffee*................. 25.00	 [ROTI AND NAAN] ")											#double slash because a single foward slash means a type of escape sequence character in python
+			print(" 4 Soft Drink(s)*.......... 25.00	 ----------------------------------")
+			print(" 5 Bread Butter............ 30.00	 29 Plain Roti.............. 20.00")
+			print(" 6 Bread Jam............... 30.00	 30 Butter Roti............. 20.00")
+			print(" 7 plain Toast Bread....... 50.00	 31 Tandoori Roti........... 20.00")
+			print(" 8 Veg. Toast Sandwich..... 50.00	 32 Butter Naan............. 20.00")
+			print(" 9 Cheese Toast Sandwich... 70.00     33 Garlic Naan..............20.00")
+			print(" 10 Grilled Sandwich....... 70.00	 [RICE] ")
+			print("	----------------------------------")
+			print(" [SOUPS]							     34 Plain Rice.............. 100.00")
+			print("----------------------------------	 35 Jeera Rice.............. 100.00")
+			print(" 11 Tomato Soup............ 110.00	 36 Lemon Rice.............. 100.00")
+			print(" 13 Chicken Broth ......... 110.00    37 Veg Fried Rice...........100.00")
+			print(" 14 Sweet corn............. 110.00	 [SOUTH INDIAN] ")
+			print(" 15 Veg. Munchow........... 110.00	 ----------------------------------")
+			print("										 38 Plain Dosa............. 100.00")
+			print(" [MAIN COURSE]   					 39 Onion Dosa............. 110.00")
+			print("----------------------------------	 40 Masala Dosa............ 130.00")
+			print(" 16 Shahi Paneer........... 110.00	 41 Uttapam................ 130.00")
+			print(" 17 Kadai Paneer........... 110.00	 42 Rice Idli.............. 130.00")
+			print(" 18 Handi Paneer........... 120.00	 43 Sambhar Vada........... 140.00")
+			print(" 19 Palak Paneer........... 120.00")
+			print(" 20 Paneer Tikka........... 140.00	 [ICE CREAMS/MILKSHAKES] ")
+			print(" 21 Matar Mushroom......... 140.00	 ----------------------------------")
+			print(" 22 Mix Veg................ 140.00	 44 Vanilla................. 60.00")
+			print(" 23 Jeera Aloo............. 140.00	 45 Strawberry.............. 60.00") 
+			print(" 24 Malai Kofta............ 140.00	 46 Chocolate............... 60.00")
+			print(" 25 Aloo Matar............. 140.00	 47 Butter Scotch........... 60.00\n")
+			print("\n\n")
+			print("* - hot and cold available")
+			print("The ice creams and milkshakes come with bowls of toppings for free,")
+			print("you may add as many toppings as you like.")
+			print("Multiple items not yet supported. Please order one items at a time.")
+			print("Enter 00 to exit ")
+			ch=1
+			while(ch!=0):
+				ch=int(input("Enter your choice(1-46):  "))
+
+				
+				# if-elif-conditions to check if the user input exists in a list or not and if not it it prints item 0 is not on the menu enter 0 to exit
+				if(ch in var1):
+					rs=20
+					r=rs+30
+				elif (ch in var2):
+					rs=20
+					r=rs+50
+				elif (ch in var3):
+					rs=20
+					r=rs+110
+
+				elif (ch in var4):
+					rs=20
+					r=rs+60
+
+				elif (ch in var5):
+					rs=20
+					r=rs+100
+
+				elif (ch in var6):
+					rs=20
+					r=rs+150
+                
+				
+				elif (ch in var7):
+					rs=20
+					r=rs+120
+
+				elif (ch in var8):
+					rs=20
+					r=rs+140
+
+                 
+				elif(ch in var9):
+					print("Item number out of indexed range. Please enter a valid item number(range:1-47).")
+			print("Total Bill: ",r)
+			
+			# updates restaurant charges and then
+			# appends in 'rc' list
+			rc.pop(n) #n will become the user input value because its looping through a range which has an el if nested statement which is checking for certain values.
+			rc.append(rc)
+		else:
+			pass
+	if f == 0:
+		print("Error: Customer ID 0 can not be used by customer. It is a special ID. Please enter a valid customer ID.\n If the problem presists, please contact the administration department.")
+	n=int(input("ENTER 0 TO GO BACK\n : "))
+	
+	if n==0:
+		Home()
+	else:
+		exit()
+	
+				
+# PAYMENT FUNCTION			
+def Payment():
+	
+	ph=str(input("Phone Number: "))
+	global i
+	f=0
+	
+	for n in range(0,i):
+		if ph==phone_number[n] :
+			
+			# checks if payment is
+			# not already done
+			if p[n]==0:
+				f=1
+				print(" Payment")
+				print(" --------------------------------")
+				print(" MODE OF PAYMENT")
+				
+				print(" 1- Credit/Debit Card")
+				print(" 2- Paytm/PhonePe")
+				print(" 3- Using UPI")
+				print(" 4- Cash")
+				x=int(input(":  "))
+				print("\n Amount: ",(price[n]*day[n])+rc[n])
+				print("\n		 Pay To The account of Hotel Suncity")
+				print(" (y/n)")
+				ch=str(input(": "))
+				
+				if ch=='y' or ch=='Y':
+					print("\n")
+					print(" --------------------------------")
+					print("		 Hotel Suncity")
+					print(" --------------------------------")
+					print("			 Bill")
+					print(" --------------------------------")
+					print(" Name: ",name[n],"\n Phone No.: ",phone_number[n],"\n Address: ",add[n],"\t")
+					print("\n Check-In: ",checkin[n],"\t\n Check-Out: ",checkout[n],"\t")
+					print("\n Room Type: ",room[n],"\t\n Room Charges: ",price[n]*day[n],"\t") #price* day is using check in check out date difference and the price of the room
+					print(" Restaurant Charges: \t",rc[n])
+					print(" --------------------------------")
+					print("\n Total Amount: ",(price[n]*day[n])+rc[n],"\t")
+					print(" --------------------------------")
+					print("		 Thank You")
+					print("  Please Visit Again ")
+					print(" --------------------------------\n")
+					p.pop(n)								#poping the phone number and inserting value of 1 for n.
+					p.insert(n,1)
+					
+					# pops room no. and customer id from list and
+					# later assigns zero at same position
+					roomno.pop(n)
+					custid.pop(n)
+					roomno.insert(n,0)
+					custid.insert(n,0)
+					
+			else:
+				
+				for j in range(n+1,i):			#for var in range(0,i)
+					if ph==phone_number[j] :	#to check if phone number already exists in 
+						if p[j]==0:
+							pass
+						
+						else:
+							f=1
+							print("\n\tPayment has been Made :)\n\n")
+	if f==0:
+		print("Invalid Customer Id")
+		
+	n = int(input("ENTER 0 TO GO BACK\n : "))
+	if n == 0:
+		Home()
+	else:
+		exit()
+
+# RECORD FUNCTION
+def Record():
+	
+	# checks if any record exists or not
+	if phone_number!=[]: #[] is an empty list. its checking if its not there and executes the statements in the block of code.
+		print("	 *** HOTEL CHECK-INS ***\n")
+		print("| Name	 | Phone No. | Address	 | Check-In | Check-Out	 | Room Type	 | Price	 |")								# the spaces here are to compensate for the \t escape sequence character
+		print("----------------------------------------------------------------------------------------------------------------------")
+		
+		for n in range(0,i):
+			print("|",name[n],"\t |",phone_number[n],"\t|",add[n],"\t|",checkin[n],"\t|",checkout[n],"\t|",room[n],"\t|",price[n])
+		
+		print("______________________________________________________________________________________________________________________")
+	
+	else:
+		print("Error: record not found.")
+	n = int(input("ENTER 0 TO GO BACK\n : "))
+	if n == 0:
+		Home()
+		
+	else:
+		exit()
+
+
+Home()
+
+#also you can pretty easily output the contents this to a file. you just have to take the various values stored in the record and write them to a file. I am too lazy to ma
