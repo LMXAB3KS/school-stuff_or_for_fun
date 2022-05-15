@@ -3,6 +3,14 @@ import random
 import datetime
 from string import printable # i forgot why i had imported this but please do not remove it. It WILL break something.
 
+# a few things you should know before reading the code.
+#1. This code is not original, its been copied from geeks to geeks and tweaked to my liking. the reason for this being a. im too lazy to write off such a long code by myself
+#and i wouldnt waste effort doing so when there is already a solution and i can tweak it.
+#b. my class teacher asked me to take public code and tweak it to my liking if i wanted for my holiday homework so thats that.
+
+#2. I would not recommend personally using this for a business. It has no security. instead you should use an sql table with a password.
+
+
 
 #this code has very poor security, you can access anyones information at any point of time, i do not personally recommend using this in an actual business unless you know how to tweak it.
 #also in the rs thing you may not see a correct value because 20 is also added to whatever theyre purchasing. 
